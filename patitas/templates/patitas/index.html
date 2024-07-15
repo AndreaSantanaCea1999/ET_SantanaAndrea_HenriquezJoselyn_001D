@@ -140,18 +140,21 @@
         </div>
     {% endif %}
 
-
     <div class="cont-cards">
-        {% for x in productos %}
+        {% for producto in productos %}
             <div class="card-prodct">
-                <img src="{{ x.imagen }}" alt="{{ x.nombre_prod }}">
-                <p class="descuento">¡50% de descuento!</p>
+                {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre_prod }}">
+                {% else %}
+                    <img src="{% static 'img/peluche.png' %}" alt="No hay imagen disponible">
+                {% endif %}
+                <p class="descuento">¡Este producto tiene descuento!</p>
                 <div class="info">
-                    <h1>{{ x.nombre_prod }}</h1>
-                    <p>{{ x.descripcion }}</p>
+                    <h1>{{ producto.nombre_prod }}</h1>
+                    <p>{{ producto.descripcion }}</p>
                     <p class="precio-anterior"><del>$50.000</del></p>
-                    <p class="precio-descuento">${{ x.precio }}</p>
-                    <form action="{% url 'agregar_al_carrito' x.id %}" method="post">
+                    <p class="precio-descuento">${{ producto.precio }}</p>
+                  
                         {% csrf_token %}
                         <button type="submit" class="añadir-btn">Agregar al Carrito</button>
                     </form>
@@ -159,7 +162,6 @@
             </div>
         {% endfor %}
     </div>
-        
          
 
 
